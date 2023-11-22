@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style-new.css">
 </head>
@@ -61,18 +61,22 @@
         const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
         const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
         if (!audio) return; //Stop the function from running if Null
-        console.log(audio);
+        // console.log(audio);
         audio.currentTime = 0; //Reset the timer
         audio.play(); //Play Audio
         key.classList.add('playing');
 
     })
-    function removeTransition(e){
+    
+    const keys =document.querySelectorAll('.key');
+    keys.forEach(key=>key.addEventListener('transitionend',removeTransition));
 
+    function removeTransition(e){
+        if (e.propertyName !== 'transform') return;
+        this.classList.remove('playing');
     }
-    const keys = document.querySelectorAll('.key');
-    keys.forEach(key=>key.addEventListener('trasitionend',removeTransition));
-    console.log(keys);
+
+    // window.addEventListener('keydown', playSound);
 </script>
 
 </body>
